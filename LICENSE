@@ -24,7 +24,7 @@ SOFTWARE.
 
 ### 📚 Third-Party Data Attribution & Licensing
 
-This repository contains database compilation pipelines that ingest, consolidate, and format bilingual lexical data from several open-source and public-domain resources. The MIT License above applies **strictly to the pipeline builder source code** (`kindle_dictionary_builder.py`, workflow files, and utility configurations).
+This repository contains database compilation pipelines that ingest, consolidate, and format bilingual lexical data from several open-source and public-domain resources. The MIT License above applies **strictly to the pipeline builder source code** (`build_dictionaries.py`, the `shobdo_vandar/` package, workflow files, and utility configurations).
 
 The raw dictionary data and vocabularies remain the intellectual properties of their respective authors and projects:
 
@@ -57,7 +57,7 @@ Inside the directory of the new raw dictionary (e.g., `OtherDict/`), you must in
 Whenever you add a new raw dataset, append it to the numbered attribution list in the root `LICENSE` and `README.md` files of this repository.
 
 #### 4. Copyleft (GPL/CC-BY-SA) Considerations
-* **Data Processing vs. Combined Code:** Running a parser script (like `kindle_dictionary_builder.py`) on a GPL-licensed text file is considered data transformation, not software linking. Therefore, your Python script code remains under the MIT License.
+* **Data Processing vs. Combined Code:** Running a parser script (like `build_dictionaries.py`) on a GPL-licensed text file is considered data transformation, not software linking. Therefore, your Python script code remains under the MIT License.
 * **Redistribution of Raw Files:** If the new raw file is licensed under copyleft terms (like GPL or CC-BY-SA) and you push it to your GitHub repository, those specific raw files must retain their original license. The nested `LICENSE` file within their folder ensures this.
 
 By using the compiled e-books or builder pipelines, you agree to respect the copyright and usage guidelines of the original resource authors.

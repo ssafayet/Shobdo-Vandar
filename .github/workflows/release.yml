@@ -58,7 +58,7 @@ jobs:
         run: |
           echo "Initializing dictionary builder pipeline..."
           # Running without -c triggers raw data ingestion, normalization, MOBI compilation and CrossPoint StarDict packaging
-          python3 kindle_dictionary_builder.py
+          python3 build_dictionaries.py
 
       - name: Extract Latest Changelog Notes
         run: |

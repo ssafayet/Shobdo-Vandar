@@ -36,7 +36,7 @@ This folder holds the high-coverage CSV source file for the **MinhasKamal Bengal
 
 ## 🛠️ Pipeline Integration
 
-The compilation script `kindle_dictionary_builder.py` automatically processes the `BengaliDictionary_93.csv` file:
+The compilation script `build_dictionaries.py` automatically processes the `BengaliDictionary_93.csv` file:
 1. Parses each English headword and its comma-separated list of Bangla meanings.
 2. Formats and normalizes the meanings, separating synonym clusters to build a clean index mapping.
 3. Ingests all `93,421` records into the master builder lexicon.

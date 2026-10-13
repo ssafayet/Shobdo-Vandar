@@ -9,20 +9,14 @@ import tempfile
 import zipfile
 import xml.etree.ElementTree as ET
 
-# Add project root to path to import kindle_dictionary_builder
+# Add project root to path to import the shobdo_vandar package
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from kindle_dictionary_builder import (
-    BanglaNormalizer,
-    EnglishMorphologyEngine,
-    BanglaMorphologyEngine,
-    xml_escape_attr,
-    KindleDictionaryCompiler,
-    StarDictCompiler,
-    bangla_nuqta_variants,
-    init_database,
-    get_project_version
-)
+from shobdo_vandar.normalize import BanglaNormalizer, bangla_nuqta_variants
+from shobdo_vandar.morphology import EnglishMorphologyEngine, BanglaMorphologyEngine
+from shobdo_vandar.lexicon import init_database
+from shobdo_vandar.kindle import xml_escape_attr, KindleDictionaryCompiler
+from shobdo_vandar.stardict import StarDictCompiler
 
 
 class TestBanglaNormalizer(unittest.TestCase):

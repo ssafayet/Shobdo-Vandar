@@ -17,7 +17,7 @@ This folder holds the raw database assets for the **Aparajeyo Dictionary** compi
 
 ## 🛠️ Pipeline Integration
 
-The compilation script `kindle_dictionary_builder.py` automatically parses these `.abedb` SQLite files during the data-ingestion phase:
+The compilation script `build_dictionaries.py` automatically parses these `.abedb` SQLite files during the data-ingestion phase:
 1. Reads raw English-to-Bangla mappings from `entobn.abedb`.
 2. Reads raw Bangla-to-English mappings from `bntoen.abedb`.
 3. Ingests their synonym arrays, parts of speech, and translated meanings, standardizing them into a single consolidated staging format.

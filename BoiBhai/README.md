@@ -15,7 +15,7 @@ This folder holds the staged monolingual dictionary JSON database compiled under
 
 ## 🛠️ Pipeline Integration
 
-The builder script `kindle_dictionary_builder.py` automatically detects and parses `boibhai_dictionary.json` during execution:
+The builder script `build_dictionaries.py` automatically detects and parses `boibhai_dictionary.json` during execution:
 1. **Direction Mapping**: Categorizes records under the `bn-bn` direction.
 2. **Ingestion Schema**: Extracts Bengali headwords, pronunciations, parts of speech, synonyms, definitions, and native usage examples.
 3. **Consolidation**: deduplicates entries and stores them into the master lexicon.

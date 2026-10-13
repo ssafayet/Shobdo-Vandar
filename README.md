@@ -212,26 +212,26 @@ Below are the step-by-step instructions for setting up the toolchain on your pre
 
 2. **Run the Complete Build Suite** (performs database staging, consolidation, full MOBI generation and CrossPoint StarDict packaging for all 3 directions):
    ```bash
-   python3 kindle_dictionary_builder.py
+   python3 build_dictionaries.py
    ```
 
 3. **Recompile MOBI Binaries Only** (skips raw ingestion stages for rapid pipeline prototyping):
    ```bash
-   python3 kindle_dictionary_builder.py -c
+   python3 build_dictionaries.py -c
    ```
 
    Pick one output with `-t` / `--target` (`all` is the default). CrossPoint packages are written to `build/crosspoint/`:
    ```bash
-   python3 kindle_dictionary_builder.py -c -t crosspoint   # StarDict packages only, no KindleGen required
-   python3 kindle_dictionary_builder.py -c -t kindle       # MOBI dictionaries only
+   python3 build_dictionaries.py -c -t crosspoint   # StarDict packages only, no KindleGen required
+   python3 build_dictionaries.py -c -t kindle       # MOBI dictionaries only
    ```
 
 4. **Preview Dictionary Layouts Directly in Terminal**:
    You can verify how an entry is displayed on Kindle popups and full-page layouts using the terminal lookup previewer:
    ```bash
-   python3 kindle_dictionary_builder.py -p "benevolent"
+   python3 build_dictionaries.py -p "benevolent"
    # Or monolingual lookup
-   python3 kindle_dictionary_builder.py -p "হিতৈষী"
+   python3 build_dictionaries.py -p "হিতৈষী"
    ```
 
 ---
@@ -266,7 +266,7 @@ This repository utilizes GitHub Actions (`.github/workflows/release.yml`) for co
 Whenever a release version tag (e.g., `v1.5.2`) is pushed to the repository:
 1. A fresh macOS environment is provisioned on GitHub runners.
 2. The latest **Kindle Previewer 3** package is dynamically fetched and installed.
-3. The `kindle_dictionary_builder.py` script initializes the ingestion pipeline, performs standardizations, and runs the MOBI compilation and CrossPoint StarDict packaging for all three targets.
+3. The `build_dictionaries.py` script initializes the ingestion pipeline, performs standardizations, and runs the MOBI compilation and CrossPoint StarDict packaging for all three targets.
 4. The workflow bundles the completed `.mobi` binaries and `_CrossPoint.zip` packages and publishes them directly to your repository's Releases page.
 
 ---

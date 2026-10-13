@@ -15,6 +15,6 @@ This folder holds the staged vocabulary mapping file for the **Ankur Bangla-Engl
 
 ## 🛠️ Pipeline Integration
 
-The compilation script `kindle_dictionary_builder.py` automatically parses `ankur_dictionary.csv` during the ingestion phase:
+The compilation script `build_dictionaries.py` automatically parses `ankur_dictionary.csv` during the ingestion phase:
 1. Extracts English headwords and their Bangla translation equivalents.
 2. Deduplicates senses and merges them into the master staging SQL table.

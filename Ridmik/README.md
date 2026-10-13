@@ -15,7 +15,7 @@ This folder holds the raw word list mapping database for the **Ridmik Keyboard D
 
 ## 🛠️ Pipeline Integration
 
-The compilation script `kindle_dictionary_builder.py` automatically processes the `dictionary` file:
+The compilation script `build_dictionaries.py` automatically processes the `dictionary` file:
 1. Scans the file line-by-line using a fast parsing regex helper.
 2. Identifies Bangla lemma keys and their English translated equivalents.
 3. Cleans, normalizes, and maps Bangla character variations.
