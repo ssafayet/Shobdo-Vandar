@@ -150,7 +150,7 @@ class EnglishMorphologyEngine:
                     forms.add(lemma + 'er')
                     forms.add(lemma + 'est')
         
-        return list(forms)
+        return sorted(forms)
 
 
 class BanglaMorphologyEngine:
@@ -211,4 +211,4 @@ class BanglaMorphologyEngine:
                 if not lemma.endswith(suffix):
                     forms.add(lemma + suffix)
                     
-        return list(forms)
+        return sorted(forms)

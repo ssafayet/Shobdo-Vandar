@@ -572,14 +572,14 @@ def _build_master_lexicon_impl(conn):
             active_source = source
             
         # Determine dominant POS
-        dominant_pos = ", ".join(list(pos_list))
+        dominant_pos = ", ".join(sorted(pos_list))
         
         # Generate Inflections
         inflections = []
         if direction == 'en-bn':
             for p in pos_list:
                 inflections.extend(morph_engine.generate_inflections(lemma, p))
-            inflections = list(set(inflections))  # Deduplicate
+            inflections = sorted(set(inflections))  # Deduplicate
         elif direction in ['bn-en', 'bn-bn']:
             inflections = BanglaMorphologyEngine.generate_inflections(lemma, dominant_pos)
             
@@ -590,7 +590,7 @@ def _build_master_lexicon_impl(conn):
             dominant_pos,
             json.dumps(senses, ensure_ascii=False),
             json.dumps(inflections, ensure_ascii=False) if inflections else None,
-            ", ".join(list(sources))
+            ", ".join(sorted(sources))
         ))
         
         count += 1

@@ -104,6 +104,13 @@ class TestBanglaMorphologyEngine(unittest.TestCase):
         self.assertIn("খেতে", forms)
         self.assertNotIn("খাওয়াটি", forms)
 
+    def test_inflections_are_sorted_for_reproducible_builds(self):
+        # Set iteration order changes between runs; output order must not
+        for forms in [BanglaMorphologyEngine.generate_inflections("মানুষ", "noun"),
+                      BanglaMorphologyEngine.generate_inflections("করা", "verb"),
+                      EnglishMorphologyEngine.generate_inflections("walk", "verb")]:
+            self.assertEqual(forms, sorted(forms))
+
 
 class TestXmlFormatting(unittest.TestCase):
     def test_xml_attribute_quote_escaping(self):
