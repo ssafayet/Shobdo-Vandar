@@ -8,8 +8,8 @@ import sys
 import time
 import argparse
 
-from .config import DB_NAME, get_project_version
-from .log import Colors, log_info, log_success, log_error, log_step
+from .config import DB_NAME, PROJECT_ROOT, get_project_version
+from .log import Colors, setup_logging, log_info, log_success, log_error, log_step
 from .lexicon import init_database, populate_staging, build_master_lexicon, print_statistics, cleanup_database
 from .kindle import compile_kindle_dictionaries
 from .stardict import compile_crosspoint_dictionaries
@@ -38,6 +38,7 @@ def print_banner():
 
 
 def main():
+    setup_logging(os.path.join(PROJECT_ROOT, 'build.log'))
     print_banner()
     
     parser = argparse.ArgumentParser(description="Standalone Bilingual Kindle & CrossPoint Reader Dictionary Compiler Pipeline.")

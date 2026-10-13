@@ -10,7 +10,7 @@ import json
 import time
 import sqlite3
 
-from .config import DB_NAME
+from .config import DB_NAME, PROJECT_ROOT
 from .log import Colors, log_info, log_success, log_warning, log_error
 from .normalize import BanglaNormalizer
 from .morphology import EnglishMorphologyEngine, BanglaMorphologyEngine
@@ -81,7 +81,7 @@ def _populate_staging_impl(conn):
     conn.commit()
     
     # 1. Ingest MinhasKamal CSV
-    minhas_path = 'MinhasKamal/BengaliDictionary_93.csv'
+    minhas_path = os.path.join(PROJECT_ROOT, 'MinhasKamal', 'BengaliDictionary_93.csv')
     minhas_records = []
     if os.path.exists(minhas_path):
         log_info("Reading MinhasKamal CSV...")
@@ -103,7 +103,7 @@ def _populate_staging_impl(conn):
         log_warning("MinhasKamal CSV not found at 'MinhasKamal/BengaliDictionary_93.csv'!")
 
     # 2. Ingest Ridmik SQLite
-    ridmik_path = 'Ridmik/dictionary'
+    ridmik_path = os.path.join(PROJECT_ROOT, 'Ridmik', 'dictionary')
     ridmik_records = []
     if os.path.exists(ridmik_path):
         log_info("Reading Ridmik SQLite DB...")
@@ -130,8 +130,8 @@ def _populate_staging_impl(conn):
         log_warning("Ridmik SQLite DB not found at 'Ridmik/dictionary'!")
 
     # 3. Ingest Aparajeyo Source
-    aparajeyo_en_path = 'Aparajeyo/entobn.abedb'
-    aparajeyo_bn_path = 'Aparajeyo/bntoen.abedb'
+    aparajeyo_en_path = os.path.join(PROJECT_ROOT, 'Aparajeyo', 'entobn.abedb')
+    aparajeyo_bn_path = os.path.join(PROJECT_ROOT, 'Aparajeyo', 'bntoen.abedb')
     aparajeyo_records = []
     
     # EN-to-BN
@@ -179,7 +179,7 @@ def _populate_staging_impl(conn):
         log_warning("Aparajeyo BN-EN abedb file not found!")
 
     # 4. Ingest Ankur CSV
-    ankur_path = 'Ankur/ankur_dictionary.csv'
+    ankur_path = os.path.join(PROJECT_ROOT, 'Ankur', 'ankur_dictionary.csv')
     ankur_records = []
     if os.path.exists(ankur_path):
         log_info("Reading Ankur CSV...")
@@ -202,7 +202,7 @@ def _populate_staging_impl(conn):
         log_warning("Ankur CSV not found at 'Ankur/ankur_dictionary.csv'!")
 
     # 5. Ingest Wiktionary JSON
-    wiktionary_path = 'Wiktionary/wiktionary_dictionary.json'
+    wiktionary_path = os.path.join(PROJECT_ROOT, 'Wiktionary', 'wiktionary_dictionary.json')
     wiktionary_records = []
     if os.path.exists(wiktionary_path):
         log_info("Reading Wiktionary JSON...")
@@ -249,7 +249,7 @@ def _populate_staging_impl(conn):
         log_warning("Wiktionary JSON not found at 'Wiktionary/wiktionary_dictionary.json'!")
 
     # 6. Ingest Hunspell DIC
-    hunspell_path = 'Hunspell/bangla_spelling.dic'
+    hunspell_path = os.path.join(PROJECT_ROOT, 'Hunspell', 'bangla_spelling.dic')
     hunspell_records = []
     if os.path.exists(hunspell_path):
         log_info("Reading Hunspell DIC...")
@@ -273,7 +273,7 @@ def _populate_staging_impl(conn):
         log_warning("Hunspell DIC not found at 'Hunspell/bangla_spelling.dic'!")
 
     # 7. Ingest BoiBhai JSON
-    boibhai_path = 'BoiBhai/boibhai_dictionary.json'
+    boibhai_path = os.path.join(PROJECT_ROOT, 'BoiBhai', 'boibhai_dictionary.json')
     boibhai_records = []
     if os.path.exists(boibhai_path):
         log_info("Reading BoiBhai JSON...")
@@ -322,7 +322,7 @@ def _populate_staging_impl(conn):
         log_warning("BoiBhai JSON not found at 'BoiBhai/boibhai_dictionary.json'!")
 
     # 8. Ingest MuntashirAkon BanglaDictionary SQLite DB
-    muntashir_db = os.path.join('MuntashirAkon', 'BanglaDictionary.db')
+    muntashir_db = os.path.join(PROJECT_ROOT, 'MuntashirAkon', 'BanglaDictionary.db')
     muntashir_records = []
     if os.path.exists(muntashir_db):
         log_info("Reading MuntashirAkon BanglaDictionary SQLite DB...")
@@ -424,7 +424,7 @@ def _build_master_lexicon_impl(conn):
     
     # Load curated contextual enrichments if file exists
     enrichments = {}
-    enrichment_path = 'contextual_enrichments.json'
+    enrichment_path = os.path.join(PROJECT_ROOT, 'contextual_enrichments.json')
     if os.path.exists(enrichment_path):
         log_info("Discovered 'contextual_enrichments.json'. Loading premium contextual enrichments...")
         try:

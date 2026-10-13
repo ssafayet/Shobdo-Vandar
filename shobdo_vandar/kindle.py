@@ -11,7 +11,7 @@ import time
 import sqlite3
 from xml.sax.saxutils import escape as xml_escape
 
-from .config import DB_NAME, BUILD_DIR, get_project_version
+from .config import DB_NAME, BUILD_DIR, PROJECT_ROOT, get_project_version
 from .log import Colors, log_info, log_success, log_warning, log_error, log_step
 
 
@@ -291,7 +291,7 @@ def compile_mobi(opf_path, output_mobi_path):
     if not kindlegen_path:
         local_names = ['kindlegen.exe', 'kindlegen'] if sys.platform == 'win32' else ['kindlegen']
         for name in local_names:
-            local_path = os.path.abspath(f'./{name}')
+            local_path = os.path.join(PROJECT_ROOT, name)
             if os.path.exists(local_path):
                 if sys.platform == 'win32' or os.access(local_path, os.X_OK):
                     kindlegen_path = local_path

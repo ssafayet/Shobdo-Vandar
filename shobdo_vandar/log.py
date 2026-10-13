@@ -34,15 +34,19 @@ class AnsiStrippingFormatter(logging.Formatter):
         record.msg = orig_msg
         return formatted
 
-if not logger.handlers:
+def setup_logging(log_path):
+    """Sends log output to stdout and to an ANSI-stripped log file. Called once by the CLI."""
+    if logger.handlers:
+        return
+
     # Console handler
     c_handler = logging.StreamHandler(sys.stdout)
     c_format = logging.Formatter('%(message)s')
     c_handler.setFormatter(c_format)
     logger.addHandler(c_handler)
-    
+
     # File handler
-    f_handler = logging.FileHandler('build.log', mode='w', encoding='utf-8')
+    f_handler = logging.FileHandler(log_path, mode='w', encoding='utf-8')
     f_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     f_handler.setFormatter(AnsiStrippingFormatter(f_format._fmt))
     logger.addHandler(f_handler)
