@@ -1,4 +1,4 @@
-name: Build and Release Kindle Dictionaries
+name: Build and Release Kindle & CrossPoint Dictionaries
 run-name: Build & Release version ${{ github.ref_name }} by @${{ github.actor }}
 
 on:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   release:
-    name: Build & Publish MOBI Dictionaries (macOS)
+    name: Build & Publish MOBI and StarDict Dictionaries (macOS)
     runs-on: macos-latest
     permissions:
       contents: write
@@ -54,10 +54,10 @@ jobs:
             exit 1
           fi
 
-      - name: Ingest Lexicon & Compile MOBI Dictionaries
+      - name: Ingest Lexicon & Compile MOBI and CrossPoint Dictionaries
         run: |
           echo "Initializing dictionary builder pipeline..."
-          # Running without -c triggers raw data ingestion, normalization, and full MOBI compilation
+          # Running without -c triggers raw data ingestion, normalization, MOBI compilation and CrossPoint StarDict packaging
           python3 kindle_dictionary_builder.py
 
       - name: Extract Latest Changelog Notes
@@ -66,13 +66,14 @@ jobs:
           python3 version_manager.py notes > latest_notes.md
           cat latest_notes.md
 
-      - name: Publish Compiled MOBI Dictionaries to GitHub Releases
+      - name: Publish Compiled Dictionaries to GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
           files: |
             build/en-bn/*.mobi
             build/bn-en/*.mobi
             build/bn-bn/*.mobi
+            build/crosspoint/*.zip
           draft: false
           prerelease: false
           body_path: latest_notes.md

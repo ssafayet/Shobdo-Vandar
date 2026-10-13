@@ -97,6 +97,10 @@ You do not need to build these files manually. The compilation pipeline runs aut
    * **`Shobdo_Vandar_en-bn_v1.5.2.mobi`** (English-to-Bangla: **94,348 entries**, ~10.4 MB)
    * **`Shobdo_Vandar_bn-en_v1.5.2.mobi`** (Bangla-to-English: **50,928 entries**, ~6.4 MB)
    * **`Shobdo_Vandar_bn-bn_v1.5.2.mobi`** (Bangla-to-Bangla: **46,552 entries**, ~9.2 MB)
+3. For **CrossPoint Reader** (Xteink X3/X4), download the StarDict packages instead:
+   * **`Shobdo_Vandar_en-bn_v<version>_CrossPoint.zip`** (English-to-Bangla)
+   * **`Shobdo_Vandar_bn-en_v<version>_CrossPoint.zip`** (Bangla-to-English)
+   * **`Shobdo_Vandar_bn-bn_v<version>_CrossPoint.zip`** (Bangla-to-Bangla)
 
 ---
 
@@ -124,6 +128,33 @@ To load the compiled dictionaries onto any physical Kindle (including Kindle Pap
 
 ---
 
+## 📖 Installation on CrossPoint Reader
+
+[CrossPoint Reader](https://github.com/crosspoint-reader/crosspoint-reader) (firmware 1.5.0 or newer) looks words up in offline [StarDict dictionaries](https://github.com/crosspoint-reader/crosspoint-reader/blob/master/docs/dictionary.md). Each `_CrossPoint.zip` holds one ready-made dictionary folder:
+
+1. Unzip the downloaded packages into the **`/dictionaries/`** folder at the root of the device's SD card (create it if it is missing), so each dictionary sits in its own folder:
+   ```text
+   SD Card/
+   └── dictionaries/
+       ├── Shobdo Vandar en-bn/
+       │   ├── shobdo_vandar_en-bn.ifo
+       │   ├── shobdo_vandar_en-bn.idx
+       │   ├── shobdo_vandar_en-bn.dict
+       │   └── shobdo_vandar_en-bn.syn
+       ├── Shobdo Vandar bn-en/
+       └── Shobdo Vandar bn-bn/
+   ```
+2. On the device, open **Settings ➔ Reader ➔ Dictionary** and pick the dictionary to use. CrossPoint uses one dictionary at a time, so switch here when you change reading language.
+3. While reading, open the reader menu and choose **Look Up**, then select a word or phrase. The first lookup shows *"Indexing dictionary…"* for a few seconds while the reader builds its search sidecars.
+
+How the CrossPoint packages differ from the MOBI builds:
+* **Inflections** — The Kindle `<idx:infl>` forms ship as a StarDict `.syn` synonym file. Inflected Bangla words such as `মানুষটি` or `করছি` resolve to their headwords, which CrossPoint's built-in English-only stemmer cannot do.
+* **Nuqta spellings** — Words containing `য়`, `ড়` or `ঢ়` are indexed in both their precomposed and decomposed Unicode forms, so lookups work however the e-book encodes them.
+* **Uncompressed data** — Definitions ship as a plain `.dict` rather than `.dict.dz`, which avoids the "Not enough memory" errors CrossPoint can hit while decompressing.
+* **Fonts** — Bangla definitions need a reader font with Bangla glyphs (see CrossPoint's [SD card fonts guide](https://github.com/crosspoint-reader/crosspoint-reader/blob/master/docs/sd-card-fonts.md)).
+
+---
+
 ## 🛠️ Local Development & Manual Compilation
 
 This project was natively designed and developed on **macOS (Apple Silicon/Intel)**, leveraging Amazon's official macOS Kindle Previewer 3 installation to compile high-fidelity `.mobi` dictionaries. 
@@ -134,7 +165,7 @@ However, because the dictionary-building script is written in standard cross-pla
 
 Regardless of your operating system, you will need:
 * **Python 3.8+** (with standard libraries).
-* **KindleGen compiler** (Amazon's proprietary MOBI dictionary compiler).
+* **KindleGen compiler** (Amazon's proprietary MOBI dictionary compiler). Not needed for the CrossPoint StarDict packages, which are built in pure Python.
 
 ---
 
@@ -179,7 +210,7 @@ Below are the step-by-step instructions for setting up the toolchain on your pre
    cd Shobdo-Vandar
    ```
 
-2. **Run the Complete Build Suite** (performs database staging, consolidation, and full MOBI generation for all 3 directions):
+2. **Run the Complete Build Suite** (performs database staging, consolidation, full MOBI generation and CrossPoint StarDict packaging for all 3 directions):
    ```bash
    python3 kindle_dictionary_builder.py
    ```
@@ -187,6 +218,12 @@ Below are the step-by-step instructions for setting up the toolchain on your pre
 3. **Recompile MOBI Binaries Only** (skips raw ingestion stages for rapid pipeline prototyping):
    ```bash
    python3 kindle_dictionary_builder.py -c
+   ```
+
+   Pick one output with `-t` / `--target` (`all` is the default). CrossPoint packages are written to `build/crosspoint/`:
+   ```bash
+   python3 kindle_dictionary_builder.py -c -t crosspoint   # StarDict packages only, no KindleGen required
+   python3 kindle_dictionary_builder.py -c -t kindle       # MOBI dictionaries only
    ```
 
 4. **Preview Dictionary Layouts Directly in Terminal**:
@@ -229,8 +266,8 @@ This repository utilizes GitHub Actions (`.github/workflows/release.yml`) for co
 Whenever a release version tag (e.g., `v1.5.2`) is pushed to the repository:
 1. A fresh macOS environment is provisioned on GitHub runners.
 2. The latest **Kindle Previewer 3** package is dynamically fetched and installed.
-3. The `kindle_dictionary_builder.py` script initializes the ingestion pipeline, performs standardizations, and runs the MOBI compilation for all three targets.
-4. The workflow bundles the completed `.mobi` binaries and publishes them directly to your repository's Releases page.
+3. The `kindle_dictionary_builder.py` script initializes the ingestion pipeline, performs standardizations, and runs the MOBI compilation and CrossPoint StarDict packaging for all three targets.
+4. The workflow bundles the completed `.mobi` binaries and `_CrossPoint.zip` packages and publishes them directly to your repository's Releases page.
 
 ---
 
